@@ -46,16 +46,13 @@ class ORJSONRenderer(BaseRenderer):
         elif isinstance(obj, list):
             return list(obj)
         elif isinstance(obj, Decimal):
-            if api_settings.COERCE_DECIMAL_TO_STRING:
-                return str(obj)
-            else:
-                return float(obj)
+            return str(obj) if api_settings.COERCE_DECIMAL_TO_STRING else float(obj)
         elif isinstance(obj, (str, uuid.UUID, Promise)):
             return str(obj)
         elif hasattr(obj, "tolist"):
             return obj.tolist()
         elif hasattr(obj, "__iter__"):
-            return list(item for item in obj)
+            return list(obj)
 
     def render(
         self,
