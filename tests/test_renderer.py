@@ -25,7 +25,7 @@ class IterObj:
         self.value = value
 
     def __iter__(self):
-        for x in range(self.value):
+        for _ in range(self.value):
             yield self.value
 
 
@@ -59,7 +59,7 @@ DATA_PARAMS = [
 @pytest.mark.parametrize("test_input,expected,coerce_decimal", DATA_PARAMS)
 def test_built_in_default_method(test_input, expected, coerce_decimal):
     """Ensure that the built-in default method works for all data types."""
-    api_settings.COERCE_DECIMAL_TO_STRING = True if coerce_decimal else False
+    api_settings.COERCE_DECIMAL_TO_STRING = bool(coerce_decimal)
     result = ORJSONRenderer.default(test_input)
     assert result == expected
 
